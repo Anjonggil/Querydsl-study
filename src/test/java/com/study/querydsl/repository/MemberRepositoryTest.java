@@ -16,25 +16,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-class MemberJpaRepositoryTest {
-
+class MemberRepositoryTest {
     @Autowired
     EntityManager em;
 
-    @Autowired MemberJpaRepository memberJpaRepository;
+    @Autowired MemberRepository memberRepository;
 
     @Test
     void basicTest(){
         Member member = new Member("member1",10);
-        memberJpaRepository.save(member);
+        memberRepository.save(member);
 
-        Member findMember = memberJpaRepository.findById(member.getId()).get();
+        Member findMember = memberRepository.findById(member.getId()).get();
         assertThat(findMember.getUsername()).isEqualTo("member1");
 
-        List<Member> result = memberJpaRepository.findAll_Querydsl();
+        List<Member> result = memberRepository.findAll();
         assertThat(result).containsExactly(member);
 
-        List<Member> result2 = memberJpaRepository.findByUsername_Querydsl("member1");
+        List<Member> result2 = memberRepository.findByUsername("member1");
         assertThat(result2).containsExactly(member);
     }
 
@@ -61,7 +60,7 @@ class MemberJpaRepositoryTest {
 //        condition.setAgeLoe(40);
         condition.setTeamName("teamB");
 
-        List<MemberTeamDto> memberTeamDtos = memberJpaRepository.search(condition);
+        List<MemberTeamDto> memberTeamDtos = memberRepository.search(condition);
         assertThat(memberTeamDtos).extracting("username").containsExactly("member3","member4");
     }
 
