@@ -574,5 +574,6 @@ public class QuerydslBasicTest {
         System.out.println("count = " + count);
     }
 
+
 }
 
